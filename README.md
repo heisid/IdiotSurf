@@ -35,3 +35,5 @@ For Windows
 6. Run it
 
 ```python3 idiotsurf.py```
+
+![Screenshoot](screenshoot1.png)
