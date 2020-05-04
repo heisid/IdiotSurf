@@ -18,7 +18,8 @@ class IdiotSurf:
         os.chdir(cachedir)
         self.lasturl = ''
         self.cachestack = collections.deque()
-    
+
+
     def is_url(self, url):
         url_pattern = re.compile(
             r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$')
@@ -26,22 +27,26 @@ class IdiotSurf:
             return True
         return False
 
+
     def showpage(self, content):
         rendered = html2text.html2text(content)
         print(rendered)
+
 
     def savetocache(self, url, content):
         hashobj = hashlib.md5(url.encode())
         filename = hashobj.hexdigest() + '.cache'
         with open(filename, 'w') as f:
             f.write(content)
-    
+
+
     def opencache(self, url):
         hashobj = hashlib.md5(url.encode())
         filename = hashobj.hexdigest() + '.cache'
         with open(filename) as f:
             content = f.read()
         self.showpage(content)
+
 
     def gotourl(self, url):
         if not (url.startswith('http://') or url.startswith('https://')):
@@ -70,7 +75,10 @@ class IdiotSurf:
             - Type back to back to previous page
             - Type history to see your embarassing browsing history
             - Type exit or quit to exit
+
+            Happy browsing, asshole :D
             ''')
+        
         lasturl = ''
         patience = 3 # patience level, just for fun
         while True:
