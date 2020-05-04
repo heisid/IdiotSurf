@@ -8,7 +8,7 @@ Todo:
 - using curses
 - 'click' on link
 - POST request
-- history
+- ~history~
 - bookmarks
 
 Sid.
