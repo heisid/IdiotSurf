@@ -79,7 +79,6 @@ class IdiotSurf:
             Happy browsing, asshole :D
             ''')
         
-        lasturl = ''
         patience = 3 # patience level, just for fun
         while True:
             print('>', end=' ')
@@ -88,7 +87,7 @@ class IdiotSurf:
                 sys.exit()
             elif self.is_url(userinput):
                 if self.lasturl:
-                    self.cachestack.append(lasturl)
+                    self.cachestack.append(self.lasturl)
                 content = self.gotourl(userinput)
                 self.showpage(content)
                 self.savetocache(userinput, content)
@@ -96,6 +95,7 @@ class IdiotSurf:
                 self.writehistory()
             elif userinput.lower() == 'back':
                 if len(self.cachestack):
+                    print(self.cachestack)
                     self.opencache(self.cachestack.pop())
             elif userinput.lower() == 'history':
                 self.showhistory()
