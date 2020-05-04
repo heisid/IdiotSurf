@@ -46,8 +46,7 @@ class IdiotSurf:
         req = requests.get(url)
         if req:
             return req.text
-        else:
-            return 'Error: ' + req.status_code
+        return 'Error: ' + req.status_code
 
     
     def mainloop(self):
