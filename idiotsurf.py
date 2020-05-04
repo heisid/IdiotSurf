@@ -6,6 +6,7 @@ import re
 import requests
 import hashlib
 from collections import deque
+import html2text
 
 
 class IdiotSurf:
@@ -24,8 +25,8 @@ class IdiotSurf:
         return False
 
     def showpage(self, content):
-        # to be rendered with bs4
-        print(content)
+        rendered = html2text.html2text(content)
+        print(rendered)
 
     def savetocache(self, url, content):
         hashobj = hashlib.md5(url.encode())
