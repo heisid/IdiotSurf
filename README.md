@@ -11,4 +11,27 @@ Todo:
 - ~history~
 - bookmarks
 
-Sid.
+## Tutorial on how to try (I say how to _try_, nobody will use this crap for daily browsing anyway):
+
+1. Make sure you have Python 3 and pip installed.
+2. You see 'Clone or download' green button up there? in the right side? Yes, that's it. Click and download zip.
+3. Extract and go to that directory
+4. Use virtualenv
+
+```python3 -m venv env```
+
+For Linux:
+
+```source env/bin/activate```
+
+For Windows
+
+```env\Scripts\activate.bat```
+
+5. Install requirements
+
+```pip install requirements.txt```
+
+6. Run it
+
+```python3 idiotsurf.py```
