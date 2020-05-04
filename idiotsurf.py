@@ -4,6 +4,8 @@ import os
 import argparse
 import re
 import requests
+import hashlib
+from collections import deque
 
 
 class IdiotSurf:
@@ -12,6 +14,7 @@ class IdiotSurf:
         if not os.path.exists(cachedir):
             os.mkdir(cachedir)
         os.chdir(cachedir)
+        self.cachestack = deque()
     
     def is_url(self, url):
         url_pattern = re.compile(
@@ -23,6 +26,19 @@ class IdiotSurf:
     def showpage(self, content):
         # to be rendered with bs4
         print(content)
+
+    def savetocache(self, url, content):
+        hashobj = hashlib.md5(url.encode())
+        filename = hashobj.hexdigest()
+        with open(filename, 'w') as f:
+            f.write(content)
+    
+    def opencache(self, url):
+        hashobj = hashlib.md5(url.encode())
+        filename = hashobj.hexdigest()
+        with open(filename) as f:
+            content = f.read()
+        self.showpage(content)
 
     def gotourl(self, url):
         if not (url.startswith('http://') or url.startswith('https://')):
@@ -41,14 +57,22 @@ class IdiotSurf:
             - Type back to back to previous page
             - Type exit or quit to exit
             ''')
+        lasturl = ''
         while True:
             print('>', end=' ')
             userinput = input()
             if userinput.lower() in ['quit', 'exit']:
                 sys.exit()
             elif self.is_url(userinput):
+                if lasturl:
+                    self.cachestack.append(lasturl)
                 content = self.gotourl(userinput)
                 self.showpage(content)
+                self.savetocache(userinput, content)
+                lasturl = userinput
+            elif userinput.lower() == 'back':
+                if len(self.cachestack):
+                    self.opencache(self.cachestack.pop())
             else:
                 print('What the fuck is it supposed to mean?')
 
