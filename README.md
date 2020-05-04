@@ -7,6 +7,7 @@ Todo:
 - prettify with bs4
 - using curses
 - 'click' on link
+- POST request
 - history
 - bookmarks
 
