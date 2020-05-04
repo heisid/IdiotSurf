@@ -7,6 +7,7 @@ import requests
 import hashlib
 import collections
 import html2text
+import datetime
 
 
 class IdiotSurf:
@@ -15,6 +16,7 @@ class IdiotSurf:
         if not os.path.exists(cachedir):
             os.mkdir(cachedir)
         os.chdir(cachedir)
+        self.lasturl = ''
         self.cachestack = collections.deque()
     
     def is_url(self, url):
@@ -49,12 +51,24 @@ class IdiotSurf:
             return req.text
         return 'Error: ' + req.status_code
 
-    
+
+    def writehistory(self):
+        currenttime = datetime.datetime.now()
+        with open('history', 'a+') as h:
+            h.write(f'{currenttime.strftime("%d %m %Y %H:%M:%S")}\t{self.lasturl}\n')
+
+
+    def showhistory(self):
+        with open('history') as h:
+            print(h.read())
+
+
     def mainloop(self):
         print('''
             Welcome to IdiotSurf, the most useless web browser ever made
             - Type the URL and then ENTER to browse
             - Type back to back to previous page
+            - Type history to see your embarassing browsing history
             - Type exit or quit to exit
             ''')
         lasturl = ''
@@ -65,15 +79,18 @@ class IdiotSurf:
             if userinput.lower() in ['quit', 'exit']:
                 sys.exit()
             elif self.is_url(userinput):
-                if lasturl:
+                if self.lasturl:
                     self.cachestack.append(lasturl)
                 content = self.gotourl(userinput)
                 self.showpage(content)
                 self.savetocache(userinput, content)
-                lasturl = userinput
+                self.lasturl = userinput
+                self.writehistory()
             elif userinput.lower() == 'back':
                 if len(self.cachestack):
                     self.opencache(self.cachestack.pop())
+            elif userinput.lower() == 'history':
+                self.showhistory()
             else:
                 if patience == 0: # even a computer has its limit...
                     print('JANCUK RAIMU ASU!!!!!! KOWÉ ISO NGANGGO KOMPUTER OPO ORA TOH NDÉS???')
