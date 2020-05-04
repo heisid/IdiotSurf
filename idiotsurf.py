@@ -58,6 +58,7 @@ class IdiotSurf:
             - Type exit or quit to exit
             ''')
         lasturl = ''
+        patience = 3 # patience level, just for fun
         while True:
             print('>', end=' ')
             userinput = input()
@@ -74,7 +75,11 @@ class IdiotSurf:
                 if len(self.cachestack):
                     self.opencache(self.cachestack.pop())
             else:
+                if patience == 0: # even a computer has its limit...
+                    print('JANCUK RAIMU ASU!!!!!! KOWÉ ISO NGANGGO KOMPUTER OPO ORA TOH NDÉS???')
+                    sys.exit(69)
                 print('What the fuck is it supposed to mean?')
+                patience -= 1
 
 
 if __name__ == '__main__':
