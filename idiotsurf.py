@@ -30,13 +30,13 @@ class IdiotSurf:
 
     def savetocache(self, url, content):
         hashobj = hashlib.md5(url.encode())
-        filename = hashobj.hexdigest()
+        filename = hashobj.hexdigest() + '.cache'
         with open(filename, 'w') as f:
             f.write(content)
     
     def opencache(self, url):
         hashobj = hashlib.md5(url.encode())
-        filename = hashobj.hexdigest()
+        filename = hashobj.hexdigest() + '.cache'
         with open(filename) as f:
             content = f.read()
         self.showpage(content)
