@@ -20,8 +20,19 @@ class IdiotSurf:
             return True
         return False
 
-    def showpage(self, url):
-        pass
+    def showpage(self, content):
+        # to be rendered with bs4
+        print(content)
+
+    def gotourl(self, url):
+        if not (url.startswith('http://') or url.startswith('https://')):
+            url = 'http://' + url
+        req = requests.get(url)
+        if req:
+            return req.text
+        else:
+            return 'Error: ' + req.status_code
+
     
     def mainloop(self):
         print('''
@@ -36,7 +47,10 @@ class IdiotSurf:
             if userinput.lower() in ['quit', 'exit']:
                 sys.exit()
             elif self.is_url(userinput):
-                self.showpage(userinput)
+                content = self.gotourl(userinput)
+                self.showpage(content)
+            else:
+                print('What the fuck is it supposed to mean?')
 
 
 if __name__ == '__main__':
