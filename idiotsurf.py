@@ -5,7 +5,7 @@ import argparse
 import re
 import requests
 import hashlib
-from collections import deque
+import collections
 import html2text
 
 
@@ -15,7 +15,7 @@ class IdiotSurf:
         if not os.path.exists(cachedir):
             os.mkdir(cachedir)
         os.chdir(cachedir)
-        self.cachestack = deque()
+        self.cachestack = collections.deque()
     
     def is_url(self, url):
         url_pattern = re.compile(
