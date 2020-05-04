@@ -68,12 +68,26 @@ class IdiotSurf:
             print(h.read())
 
 
+    def clear(self):
+        self.lasturl = ''
+        self.cachestack.clear()
+        allfiles = os.listdir('.')
+        cachefiles = [f for f in allfiles if f.endswith('.cache')]
+        for f in cachefiles:
+            os.remove(os.path.join('.', f))
+        print('Cache cleared')
+        h = open('history', 'w')
+        h.close()
+        print('History cleared')
+
+
     def mainloop(self):
         print('''
             Welcome to IdiotSurf, the most useless web browser ever made
             - Type the URL and then ENTER to browse
             - Type back to back to previous page
             - Type history to see your embarassing browsing history
+            - Type clear to clear cached webpages and history
             - Type exit or quit to exit
 
             Happy browsing, asshole :D
@@ -99,6 +113,8 @@ class IdiotSurf:
                     self.opencache(self.cachestack.pop())
             elif userinput.lower() == 'history':
                 self.showhistory()
+            elif userinput.lower() == 'clear':
+                self.clear()
             else:
                 if patience == 0: # even a computer has its limit...
                     print('JANCUK RAIMU ASU!!!!!! KOWÉ ISO NGANGGO KOMPUTER OPO ORA TOH NDÉS???')
